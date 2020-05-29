@@ -34,5 +34,16 @@ class Helpers:
         elif board[0][2] == board[1][1] == board[2][0] and board[0][2] != 0:
             return_value["victory"] = True
             return_value["winner"] = board[0][2]
+
+        count = 0
+        for i in range(0, 3):
+            for j in range(0, 3):
+                if board[i][j] != 0:
+                    count += 1
+
+        if return_value["victory"] == False and count == 9: # all spaces are filled and there is no winner, so it's a draft
+            return_value["victory"] = True
+            return_value["winner"] = "Draft"
+
         
         return return_value
