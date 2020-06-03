@@ -10,7 +10,18 @@ class Helpers:
             print("0. Exit\n")
             opt = int(input("Select an option: "))
         return opt
-    
+
+    def online_menu():
+        opt = -1
+        while opt < 0 or opt > 2:
+            print("** TIC TAC TOE ONLINE **\n")
+            print("1. Host the game")
+            print("2. Join a game")
+            print("0. Cancel\n")
+            opt = int(input("Select an option: "))
+        return opt
+
+
     def show_board(board):
 
         print("")

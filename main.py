@@ -1,6 +1,7 @@
 
 from helpers import Helpers
 from random import randint
+import socket
 
 player_coordinates = {"x": 0, "y": 0}
 player1_coordinates = {"x": 0, "y": 0}
@@ -11,12 +12,38 @@ board = [
         [0, 0, 0]
         ]
 
+PORT = 2911
+
 won = False
 first_play = True
 
 game_mode = Helpers.main_menu()
+online_mode = 0
+s = "this_will_be_the_socket"
+username = "player"
+opponent_name = "player1"
 
 if game_mode != 0:
+    if game_mode == 2: # online menu
+        online_mode = Helpers.online_menu()
+        username = input("Enter your username: ")
+        if online_mode == 1: # server mode
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.bind((socket.gethostname(), PORT))
+                print("Players need to be on the same network to play!")
+                print("My IP address: " + s.getsockname()[0])
+                print("Waiting for player connection...")
+                s.listen()
+                conn, addr = s.accept()
+                with conn:
+                    opponent_name = conn.recv(1024).decode()
+                    print(opponent_name + " connected.")
+        else: # client mode
+            HOST = str(input("Enter the host IP address: "))
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.connect((HOST, PORT))
+                s.sendall(str.encode(username))
+
     while won == False:
 
         # human (this) plays
