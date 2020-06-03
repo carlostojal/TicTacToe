@@ -1,5 +1,15 @@
 
 class Helpers:
+
+    def main_menu():
+        opt = -1
+        while opt < 0 or opt > 2:
+            print("** TIC TAC TOE**\n")
+            print("1. Player vs Computer")
+            print("2. Player vs Player")
+            print("0. Exit\n")
+            opt = int(input("Select an option: "))
+        return opt
     
     def show_board(board):
 
